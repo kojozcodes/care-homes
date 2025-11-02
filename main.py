@@ -1,4 +1,5 @@
 import streamlit as st
+import hashlib
 import pandas as pd
 import datetime as dt
 import calendar
@@ -16,6 +17,29 @@ import requests
 # Streamlit page setup
 # -------------------------
 st.set_page_config(page_title="Care Home Monthly Calendar", layout="wide")
+
+# -------------------------
+# Secure single-user login
+# -------------------------
+# Read password from Streamlit Secrets (not in code!)
+REAL_PASSWORD = st.secrets["APP_PASSWORD"]
+PASSWORD_HASH = hashlib.sha256(REAL_PASSWORD.encode()).hexdigest()
+
+# Initialize login session
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+
+if not st.session_state.logged_in:
+    st.title("🔐 Secure Access")
+    password = st.text_input("Enter password", type="password")
+    if st.button("Login"):
+        if hashlib.sha256(password.encode()).hexdigest() == PASSWORD_HASH:
+            st.session_state.logged_in = True
+            st.success("Access granted ✅")
+            st.rerun()
+        else:
+            st.error("Incorrect password. Try again.")
+    st.stop()  # Stops the rest of the app from loading until login
 
 # -------------------------
 # Utility functions
