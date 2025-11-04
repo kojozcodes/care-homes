@@ -1,3 +1,4 @@
 .idea
 .venv
 .streamlit/secrets.toml
+.env

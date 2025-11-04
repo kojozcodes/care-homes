@@ -12,6 +12,7 @@ from reportlab.lib.colors import Color, black, white
 import textwrap
 import re
 import requests
+import json
 
 # -------------------------
 # Streamlit page setup
@@ -41,6 +42,7 @@ if not st.session_state.logged_in:
             st.error("Incorrect password. Try again.")
     st.stop()  # Stops the rest of the app from loading until login
 
+
 # -------------------------
 # Utility functions
 # -------------------------
@@ -53,83 +55,85 @@ def parse_csv(uploaded_file):
         st.error(f"CSV parse error: {e}")
         return None
 
+
 def month_date_range(year: int, month: int):
     first = dt.date(year, month, 1)
     last = dt.date(year, month, calendar.monthrange(year, month)[1])
     return first, last
 
+
 def clean_text(s):
     if not isinstance(s, str):
         s = str(s) if s is not None else ""
+    # Replace known special characters and invisible breaks
     replacements = {
         "\u2013": "-", "\u2014": "-",
         "\u2018": "'", "\u2019": "'",
         "\u201c": '"', "\u201d": '"',
         "\u2026": "...", "\xa0": " ",
+        "\r": " ", "\n": " ", "\u2028": " ", "\u2029": " ", "\ufeff": " ",
+        "\u200b": "", "\u200c": "", "\u200d": "", "\u2060": "",  # zero-width chars
     }
     for bad, good in replacements.items():
         s = s.replace(bad, good)
-    s = re.sub(r"[^\x00-\x7F]+", "", s)
+
+    # Remove any other non-printable or non-ASCII characters
+    s = re.sub(r"[^\x20-\x7E]", " ", s)
+    # Collapse multiple spaces
+    s = re.sub(r"\s+", " ", s)
     return s.strip()
+
+
+
+@st.cache_data
+def load_all_holidays():
+    try:
+        with open("holidays_2025_2026.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+            return data.get("holidays", [])
+    except Exception as e:
+        st.warning(f"Could not load holidays file: {e}")
+        return []
+
+
+ALL_HOLIDAYS = load_all_holidays()
+
 
 # -------------------------
 # Holiday fetcher
 # -------------------------
-def fetch_uk_bank_holidays(year, month):
-    """Fetch UK national bank holidays for the given year/month."""
-    try:
-        resp = requests.get("https://www.gov.uk/bank-holidays.json", timeout=10)
-        resp.raise_for_status()
-        data = resp.json()
-    except Exception as e:
-        st.warning(f"Could not fetch UK bank holidays: {e}")
-        return []
-
+def fetch_selected_holidays(year, month, selected_names=None):
+    """Return holidays for this month/year, filtered by selected_names if provided."""
     holidays_list = []
-    for region in ("england-and-wales", "scotland", "northern-ireland"):
-        events = data.get(region, {}).get("events", [])
-        for ev in events:
-            try:
-                d = dt.datetime.strptime(ev["date"], "%Y-%m-%d").date()
-            except:
-                continue
-            if d.year == year and d.month == month:
-                holidays_list.append({"date": d, "title": clean_text(ev["title"]), "notes": "Holiday"})
+    for h in ALL_HOLIDAYS:
+        try:
+            d = dt.datetime.strptime(h["date"], "%Y-%m-%d").date()
+        except:
+            continue
+        if d.year == year and d.month == month:
+            name = clean_text(h["name"])
+            if (not selected_names) or (name in selected_names):
+                holidays_list.append({"date": d, "title": name, "notes": "Holiday"})
     return holidays_list
 
-def fetch_awareness_days(year, month):
-    """Static fallback list of awareness / global days for testing. Expand as needed."""
-    # Example list (you should expand with full month data)
-    static_list = [
-        {"date": dt.date(year, 11, 1), "title": "World Vegan Day", "notes": "Holiday"},
-        {"date": dt.date(year, 11, 1), "title": "All Saints' Day", "notes": "Holiday"},
-        {"date": dt.date(year, 11, 2), "title": "All Souls’ Day", "notes": "Holiday"},
-        {"date": dt.date(year, 11, 5), "title": "Bonfire Night (UK)", "notes": "Holiday"},
-        {"date": dt.date(year, 11, 11), "title": "Remembrance Day (UK)", "notes": "Holiday"},
-        {"date": dt.date(year, 11, 13), "title": "World Kindness Day", "notes": "Holiday"},
-        {"date": dt.date(year, 11, 14), "title": "World Diabetes Day", "notes": "Holiday"},
-        {"date": dt.date(year, 11, 16), "title": "International Day for Tolerance", "notes": "Holiday"},
-        {"date": dt.date(year, 11, 19), "title": "International Men’s Day", "notes": "Holiday"},
-        {"date": dt.date(year, 11, 20), "title": "Universal Children’s Day", "notes": "Holiday"},
-        {"date": dt.date(year, 11, 25), "title": "International Day for the Elimination of Violence Against Women", "notes": "Holiday"},
-        {"date": dt.date(year, 11, 30), "title": "St Andrew’s Day (Scotland)", "notes": "Holiday"},
-    ]
-    # Filter for correct year/month
-    return [ev for ev in static_list if ev["date"].year == year and ev["date"].month == month]
+
 
 # -------------------------
 # Core: Build calendar day mapping
 # -------------------------
-def seat_activity_into_calendar(year, month, activities_df, rota_df, rules, include_holidays=True, daily_rules=None):
+def seat_activity_into_calendar(year, month, activities_df, rota_df, rules,
+                                include_holidays=True, daily_rules=None):
     first, last = month_date_range(year, month)
-    daymap = {first + dt.timedelta(days=i): [] for i in range((last - first).days + 1)}
+    daymap = {first + dt.timedelta(days=i): [] for i in
+              range((last - first).days + 1)}
 
     # 1️⃣ Holidays (auto-fetch)
     if include_holidays:
         seen_holidays = set()  # to track (date, normalized_title)
 
         # Combine all sources
-        combined_holidays = fetch_uk_bank_holidays(year, month) + fetch_awareness_days(year, month)
+        combined_holidays = fetch_selected_holidays(year, month, st.session_state.get("selected_holidays"))
+
 
         for ev in combined_holidays:
             d = ev["date"]
@@ -141,12 +145,20 @@ def seat_activity_into_calendar(year, month, activities_df, rota_df, rules, incl
             seen_holidays.add((d, title_norm))
 
             if d in daymap:
-                daymap[d].append({
-                    "time": None,
-                    "title": ev["title"],
-                    "notes": "Holiday"
-                })
-
+                # Combine multiple holidays on same day
+                existing_titles = [e["title"] for e in daymap[d] if
+                                   e["notes"] == "Holiday"]
+                if existing_titles:
+                    combined = " / ".join(
+                        sorted(set(existing_titles + [ev["title"]])))
+                    # Replace existing entry with combined title
+                    daymap[d] = [e for e in daymap[d] if
+                                 e["notes"] != "Holiday"]
+                    daymap[d].append(
+                        {"time": None, "title": combined, "notes": "Holiday"})
+                else:
+                    daymap[d].append({"time": None, "title": ev["title"],
+                                      "notes": "Holiday"})
 
     # 2️⃣ Staff Shifts
     if rota_df is not None:
@@ -163,14 +175,17 @@ def seat_activity_into_calendar(year, month, activities_df, rota_df, rules, incl
                 shift_time = f"({start} – {end})" if start and end else ""
                 display = f"{staff} {shift_time}".strip()
                 if display:
-                    daymap[d].append({"time": None, "title": display, "notes": "staff shift"})
+                    daymap[d].append({"time": None, "title": display,
+                                      "notes": "staff shift"})
 
     # 3️⃣ Fixed Weekly Rules
     fixed_rules = []
     for rule in rules:
         for d in daymap:
             if d.weekday() == rule["weekday"]:
-                fixed_rules.append({"date": d, "time": rule.get("time"), "title": clean_text(rule["title"]), "notes": "fixed"})
+                fixed_rules.append({"date": d, "time": rule.get("time"),
+                                    "title": clean_text(rule["title"]),
+                                    "notes": "fixed"})
 
     # 3️⃣b Fixed Daily Rules
     if daily_rules:
@@ -191,18 +206,22 @@ def seat_activity_into_calendar(year, month, activities_df, rota_df, rules, incl
             pref_days = str(r.get("preferred_days", "")).split(";")
             pref_days = [p.strip()[:3].lower() for p in pref_days if p.strip()]
             pref_time = str(r.get("preferred_time", "")).strip()
-            freq = int(r.get("frequency", 0)) if str(r.get("frequency", "")).isdigit() else 0
+            freq = int(r.get("frequency", 0)) if str(
+                r.get("frequency", "")).isdigit() else 0
             placed = 0
             for d in sorted(daymap.keys()):
                 if freq and placed >= freq:
                     break
                 dow3 = calendar.day_name[d.weekday()][:3].lower()
                 if dow3 in pref_days:
-                    activities.append({"date": d, "time": pref_time, "title": name, "notes": "activity"})
+                    activities.append(
+                        {"date": d, "time": pref_time, "title": name,
+                         "notes": "activity"})
                     placed += 1
 
     # 5️⃣ Merge + Normalize Times + Deduplicate + Sort
     time_pattern = re.compile(r"^(\d{1,2})(?::?(\d{2}))?$")
+
     def normalize_time(t):
         if not t or not isinstance(t, str):
             return None
@@ -225,13 +244,16 @@ def seat_activity_into_calendar(year, month, activities_df, rota_df, rules, incl
             continue
         title_norm = ev["title"].lower().strip()
         time_norm = ev.get("time")
-        duplicates = [e for e in daymap[d] if e["title"].lower().strip() == title_norm]
+        duplicates = [e for e in daymap[d] if
+                      e["title"].lower().strip() == title_norm]
         if duplicates:
             has_exact = any(e.get("time") == time_norm for e in duplicates)
-            has_proper = any(e.get("time") and len(e.get("time")) == 5 for e in duplicates)
+            has_proper = any(
+                e.get("time") and len(e.get("time")) == 5 for e in duplicates)
             if has_exact or (has_proper and not time_norm):
                 continue
-        daymap[d].append({"time": time_norm, "title": ev["title"], "notes": ev["notes"]})
+        daymap[d].append(
+            {"time": time_norm, "title": ev["title"], "notes": ev["notes"]})
 
     def sort_key(e):
         t = e.get("time")
@@ -251,12 +273,9 @@ def seat_activity_into_calendar(year, month, activities_df, rota_df, rules, incl
         ))
     return daymap
 
-# (— rest of your draw_calendar_pdf and Streamlit UI code unchanged — as in your existing)
-# You would paste the draw_calendar_pdf definition here and the Streamlit UI as you already have.
 
-
-
-def draw_calendar_pdf(title, disclaimer, year, month, cell_texts, background_bytes=None):
+def draw_calendar_pdf(title, disclaimer, year, month, cell_texts,
+                      background_bytes=None):
     """Generate styled non-editable A3 calendar PDF with improved readability and formatting"""
     buffer = BytesIO()
     c = canvas.Canvas(buffer, pagesize=landscape(A3))
@@ -268,7 +287,8 @@ def draw_calendar_pdf(title, disclaimer, year, month, cell_texts, background_byt
     if background_bytes:
         try:
             img = ImageReader(BytesIO(background_bytes))
-            c.drawImage(img, 0, 0, width=width, height=height, preserveAspectRatio=False, mask="auto")
+            c.drawImage(img, 0, 0, width=width, height=height,
+                        preserveAspectRatio=False, mask="auto")
         except Exception as e:
             st.warning(f"Background load failed: {e}")
 
@@ -355,7 +375,6 @@ def draw_calendar_pdf(title, disclaimer, year, month, cell_texts, background_byt
     grid_h = top_of_grid - bottom
     row_h = grid_h / rows
 
-
     # --------------------------
     # Calendar cells
     # --------------------------
@@ -386,8 +405,8 @@ def draw_calendar_pdf(title, disclaimer, year, month, cell_texts, background_byt
             day_width = c.stringWidth(day_str, "Helvetica-Bold", 12)
 
             # Position a few millimetres from the right edge and near the top
-            c.drawString(x + col_w - day_width - 3 * mm, y + row_h - 6 * mm, day_str)
-
+            c.drawString(x + col_w - day_width - 1.2 * mm, y + row_h - 4.5 * mm,
+                         day_str)
 
             # --- Prepare text
             lines = cell_texts.get(d, "").split("\n")
@@ -399,39 +418,130 @@ def draw_calendar_pdf(title, disclaimer, year, month, cell_texts, background_byt
                 if not line:
                     continue
 
-                # wrap long lines safely at ~31 characters
-                wrapped_lines = textwrap.wrap(line, width=31)
+                # 🧩 Handle each line separately
+                if line.isupper():
+                    # 🔹 Dynamic wrapping for holidays (skip generic wrapping)
+                    max_text_width = col_w - (day_width + 6 * mm)
+                    words = line.split()
+                    current_line = ""
+                    wrapped_holiday = []
+
+                    for word in words:
+                        test_line = (current_line + " " + word).strip()
+                        line_width = c.stringWidth(test_line, "Helvetica-Bold",
+                                                   8.7)
+                        if line_width > max_text_width and current_line:
+                            wrapped_holiday.append(current_line)
+                            current_line = word
+                        else:
+                            current_line = test_line
+                    if current_line:
+                        wrapped_holiday.append(current_line)
+
+                    for wh in wrapped_holiday:
+                        wh = wh.strip()
+                        if not wh:
+                            continue
+                        c.setFont("Helvetica-Bold", 8.7)
+                        c.setFillColor(black)
+                        c.drawString(x + 2 * mm, text_y, wh)
+
+                        # underline
+                        text_width = c.stringWidth(wh, "Helvetica-Bold", 8.7)
+                        underline_y = text_y - 0.5 * mm
+                        c.line(x + 2 * mm, underline_y,
+                               x + 2 * mm + text_width, underline_y)
+                        text_y -= line_spacing
+                    continue  # move to next line (skip normal wrapping below)
+
+                # 🔹 For non-holiday lines, smart wrapping (no broken times or parentheses)
+                c.setFont("Helvetica-Bold", 10.5)
+                max_text_width = col_w - (day_width + 0.5 * mm)
+
+                # Handle staff lines separately (never wrap mid-line)
+                if line.lower().startswith("staff:"):
+                    c.setFont("Helvetica-Oblique", 10.5)
+                    c.setFillColor(staff_blue)
+                    c.drawString(x + 2 * mm, text_y, line)
+                    text_y -= line_spacing - 1
+                    continue
+
+                # Handle activity lines — wrap neatly without cutting times
+                time_match = re.match(
+                    r"^(\d{1,2}:\d{2}\s?(?:am|pm|AM|PM)?)\s?(.*)", line)
+                if time_match:
+                    time_part, rest = time_match.groups()
+                    rest = rest.strip()
+
+                    # Draw the time part first
+                    c.setFont("Helvetica-Bold", 10.5)
+                    c.setFillColor(black)
+                    c.drawString(x + 2 * mm, text_y, time_part)
+
+                    # Start wrapping the rest dynamically
+                    time_width = c.stringWidth(time_part + " ",
+                                               "Helvetica-Bold", 10.5)
+                    available_width = max_text_width - time_width
+
+                    words = rest.split()
+                    current_line = ""
+                    wrapped_lines = []
+
+                    for word in words:
+                        test_line = (current_line + " " + word).strip()
+                        if c.stringWidth(test_line, "Helvetica-Bold",
+                                         10.5) > available_width and current_line:
+                            wrapped_lines.append(current_line)
+                            current_line = word
+                        else:
+                            current_line = test_line
+                    if current_line:
+                        wrapped_lines.append(current_line)
+
+                    # Draw wrapped lines
+                    first_line = True
+                    for wline in wrapped_lines:
+                        wline = wline.strip()
+                        if not wline:
+                            continue
+                        if first_line:
+                            c.drawString(x + 2 * mm + time_width, text_y,
+                                         wline)
+                            first_line = False
+                        else:
+                            text_y -= line_spacing
+                            c.drawString(x + 2 * mm, text_y, wline)
+
+                    text_y -= line_spacing
+                    if text_y < y + 4 * mm:
+                        break
+                    continue
+
+                # All other normal text (wrap safely)
+                words = line.split()
+                current_line = ""
+                wrapped_lines = []
+                for word in words:
+                    test_line = (current_line + " " + word).strip()
+                    if c.stringWidth(test_line, "Helvetica-Bold",
+                                     10.5) > max_text_width and current_line:
+                        wrapped_lines.append(current_line)
+                        current_line = word
+                    else:
+                        current_line = test_line
+                if current_line:
+                    wrapped_lines.append(current_line)
+
                 for subline in wrapped_lines:
                     subline = subline.strip()
                     if not subline:
                         continue
-
-                    # 🔹 Holiday lines — bold, left-aligned, wrapped, and precisely underlined
-                    if subline.isupper():
-                        c.setFont("Helvetica-Bold", 8.7)
-                        c.setFillColor(black)
-                        wrapped_holiday = textwrap.wrap(subline, width=28)
-
-                        for wh in wrapped_holiday:
-                            wh = wh.strip()
-                            if not wh:
-                                continue
-
-                            # Draw text
-                            c.drawString(x + 2 * mm, text_y, wh)
-
-                            # Draw underline exactly matching the text width
-                            text_width = c.stringWidth(wh, "Helvetica-Bold", 8.7)
-                            underline_y = text_y - 0.5 * mm
-                            c.line(x + 2 * mm, underline_y, x + 2 * mm + text_width, underline_y)
-
-                            # Move down for next line
-                            text_y -= line_spacing
-
-                        continue
-
-
-
+                    c.setFont("Helvetica-Bold", 10.5)
+                    c.setFillColor(black)
+                    c.drawString(x + 2 * mm, text_y, subline)
+                    text_y -= line_spacing
+                    if text_y < y + 4 * mm:
+                        break
 
                     # 🔹 Staff (italic, blue)
                     if subline.lower().startswith("staff:"):
@@ -442,13 +552,15 @@ def draw_calendar_pdf(title, disclaimer, year, month, cell_texts, background_byt
                         continue
 
                     # 🔹 Activities (bold time, normal text)
-                    time_match = re.match(r"^(\d{1,2}:\d{2}\s?(?:am|pm|AM|PM)?)\s?(.*)", subline)
+                    time_match = re.match(
+                        r"^(\d{1,2}:\d{2}\s?(?:am|pm|AM|PM)?)\s?(.*)", subline)
                     if time_match:
                         time_part, rest = time_match.groups()
                         c.setFont("Helvetica-Bold", 10.5)
                         c.setFillColor(black)
                         c.drawString(x + 2 * mm, text_y, time_part)
-                        time_width = c.stringWidth(time_part + " ", "Helvetica-Bold", 9.5)
+                        time_width = c.stringWidth(time_part + " ",
+                                                   "Helvetica-Bold", 9.5)
                         c.setFont("Helvetica-Bold", 10.5)
                         c.drawString(x + 2 * mm + time_width, text_y, rest)
                     else:
@@ -460,12 +572,9 @@ def draw_calendar_pdf(title, disclaimer, year, month, cell_texts, background_byt
                     if text_y < y + 4 * mm:
                         break
 
-
     c.save()
     buffer.seek(0)
     return buffer
-
-
 
 
 # -------------------------
@@ -476,11 +585,14 @@ st.title("🏡 Care Home Monthly Activities — Editable Preview & A3 PDF")
 col1, col2 = st.columns(2)
 with col1:
     year = st.number_input("Year", 2024, 2035, dt.date.today().year)
-    month = st.selectbox("Month", range(1, 13), index=dt.date.today().month - 1,
+    month = st.selectbox("Month", range(1, 13),
+                         index=dt.date.today().month - 1,
                          format_func=lambda x: calendar.month_name[x])
 with col2:
-    title = st.text_input("Calendar Title", f"{calendar.month_name[month]} {year}")
-    disclaimer = st.text_input("Disclaimer", "Activities subject to change. Please confirm with staff.")
+    title = st.text_input("Calendar Title",
+                          f"{calendar.month_name[month]} {year}")
+    disclaimer = st.text_input("Disclaimer",
+                               "Activities subject to change. Please confirm with staff.")
 
 st.markdown("### 📋 CSV Upload Instructions")
 
@@ -516,9 +628,11 @@ with st.expander("🎯 Activities CSV Format (Example)"):
     """)
 
 rota_df = parse_csv(st.file_uploader("📂 Upload Staff Rota CSV", type=["csv"]))
-activities_df = parse_csv(st.file_uploader("📂 Upload Activities CSV", type=["csv"]))
+activities_df = parse_csv(
+    st.file_uploader("📂 Upload Activities CSV", type=["csv"]))
 
-bg_file = st.file_uploader("Background Image (optional)", type=["png", "jpg", "jpeg"])
+bg_file = st.file_uploader("Background Image (optional)",
+                           type=["png", "jpg", "jpeg"])
 
 fixed_rules_text = st.text_area(
     "Fixed Weekly Rules (e.g. Film Night:Thu:18:00)",
@@ -529,7 +643,6 @@ daily_rules_text = st.text_area(
     "Fixed Daily Rules (e.g. Morning Exercise:09:00)",
     "Morning Exercise:09:00\nNews Headlines:10:00"
 )
-
 
 rules = []
 for line in fixed_rules_text.splitlines():
@@ -562,6 +675,70 @@ for line in daily_rules_text.splitlines():
 include_holidays = st.checkbox("Include UK National Holidays", True)
 
 # -------------------------
+# Holiday selection system (simple border around each day group)
+# -------------------------
+if include_holidays:
+    st.markdown("### 🗓️ Select Holidays to Include")
+
+    # Group holidays by date
+    holidays_by_day = {}
+    for h in ALL_HOLIDAYS:
+        try:
+            d = dt.datetime.strptime(h["date"], "%Y-%m-%d").date()
+        except:
+            continue
+        if d.year == year and d.month == month:
+            holidays_by_day.setdefault(d, []).append(h["name"])
+
+    if not holidays_by_day:
+        st.info("No holidays found for this month.")
+    else:
+        selected_holidays = []
+
+        # Simple CSS border style
+        st.markdown("""
+        <style>
+        .day-block {
+            border: 1px solid #aaa;
+            border-radius: 6px;
+            padding: 6px 8px;
+            margin: 4px 0;
+        }
+        .day-header {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
+        # Display in table-like layout by week
+        month_days = calendar.monthcalendar(year, month)
+        for week in month_days:
+            cols = st.columns(7)
+            for c_idx, day in enumerate(week):
+                if day == 0:
+                    continue
+                date_obj = dt.date(year, month, day)
+                day_holidays = holidays_by_day.get(date_obj, [])
+
+                with cols[c_idx]:
+                    st.markdown(
+                        f"<div class='day-block'><div class='day-header'>{calendar.month_abbr[month]} {day}</div>",
+                        unsafe_allow_html=True
+                    )
+                    if not day_holidays:
+                        st.markdown("<em>No holidays</em>", unsafe_allow_html=True)
+                    else:
+                        for name in sorted(set(day_holidays)):
+                            key = f"hol_{year}-{month:02d}-{day:02d}_{name}"
+                            if st.checkbox(name, value=True, key=key):
+                                selected_holidays.append(name)
+                    st.markdown("</div>", unsafe_allow_html=True)
+
+        st.session_state["selected_holidays"] = selected_holidays
+
+
+# -------------------------
 # Preview and Editable Calendar Section
 # -------------------------
 
@@ -590,7 +767,8 @@ if st.button("Preview Calendar"):
 
 # Editable preview (only for currently selected month)
 if session_key in st.session_state:
-    st.subheader(f"📝 Edit Calendar for {calendar.month_name[month]} {year} Before Generating PDF")
+    st.subheader(
+        f"📝 Edit Calendar for {calendar.month_name[month]} {year} Before Generating PDF")
     month_days = calendar.monthcalendar(year, month)
 
     for week in month_days:
@@ -626,7 +804,8 @@ if session_key in st.session_state:
         }
 
         pdf_buf = draw_calendar_pdf(
-            title, disclaimer, year, month, edited_texts, background_bytes=bg_bytes
+            title, disclaimer, year, month, edited_texts,
+            background_bytes=bg_bytes
         )
 
         st.success("✅ A3 PDF calendar generated successfully!")

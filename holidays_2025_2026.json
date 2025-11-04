@@ -1,0 +1,2989 @@
+{
+    "metadata": {
+        "generated_at": "2025-11-03T23:37:07.791817",
+        "range": "2025-11 to 2026-12",
+        "sources": [
+            "Young Citizens (Awareness Calendar)",
+            "GOV.UK Bank Holidays",
+            "Calendarific API"
+        ]
+    },
+    "holidays": [
+        {
+            "date": "2024-01-01",
+            "name": "New Year’s Day",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2024-01-02",
+            "name": "2nd January",
+            "source": "GOV.UK (scotland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2024-03-18",
+            "name": "St Patrick’s Day",
+            "source": "GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2024-03-29",
+            "name": "Good Friday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2024-04-01",
+            "name": "Easter Monday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2024-05-06",
+            "name": "Early May bank holiday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2024-05-27",
+            "name": "Spring bank holiday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2024-07-12",
+            "name": "Battle of the Boyne (Orangemen’s Day)",
+            "source": "GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2024-08-05",
+            "name": "Summer bank holiday",
+            "source": "GOV.UK (scotland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2024-08-26",
+            "name": "Summer bank holiday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2024-12-02",
+            "name": "St Andrew’s Day",
+            "source": "GOV.UK (scotland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2024-12-25",
+            "name": "Christmas Day",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2024-12-26",
+            "name": "Boxing Day",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2025-01-01",
+            "name": "New Year’s Day",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2025-01-01",
+            "name": "New Year's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-01-02",
+            "name": "2nd January",
+            "source": "GOV.UK (scotland), Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2025-01-02",
+            "name": "Last day of Hanukkah",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-01-05",
+            "name": "Twelfth Night",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-01-06",
+            "name": "Epiphany",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-01-07",
+            "name": "Orthodox Christmas Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-01-14",
+            "name": "Orthodox New Year",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-01-25",
+            "name": "Burns Night",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-01-27",
+            "name": "Isra and Mi'raj",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-01-29",
+            "name": "Lunar New Year",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-02-13",
+            "name": "Tu B'Shevat (Arbor Day)",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-02-14",
+            "name": "Valentine's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-02-26",
+            "name": "Maha Shivaratri",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-03-01",
+            "name": "Ramadan Start",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-03-01",
+            "name": "St. David's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-03-02",
+            "name": "Ramadan Start",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-03-04",
+            "name": "Carnival / Shrove Tuesday / Pancake Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-03-05",
+            "name": "Carnival / Ash Wednesday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-03-14",
+            "name": "Purim",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-03-17",
+            "name": "St Patrick’s Day",
+            "source": "GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2025-03-17",
+            "name": "St Patrick's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-03-20",
+            "name": "March Equinox",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-03-26",
+            "name": "Lailat al-Qadr",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-03-30",
+            "name": "Eid ul Fitr",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-03-30",
+            "name": "Mother's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-03-30",
+            "name": "Daylight Saving Time starts",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-03-31",
+            "name": "Eid ul Fitr",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-04-13",
+            "name": "Palm Sunday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-04-13",
+            "name": "First day of Passover",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-04-17",
+            "name": "Maundy Thursday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-04-18",
+            "name": "Good Friday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland), Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2025-04-18",
+            "name": "Orthodox Good Friday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-04-19",
+            "name": "Holy Saturday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-04-19",
+            "name": "Orthodox Holy Saturday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-04-20",
+            "name": "Last day of Passover",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-04-20",
+            "name": "Orthodox Easter",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-04-20",
+            "name": "Easter Sunday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-04-21",
+            "name": "Easter Monday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (northern-ireland), Calendarific, Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2025-04-21",
+            "name": "Orthodox Easter Monday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-04-22",
+            "name": "Stephen Lawrence Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-04-23",
+            "name": "St. George's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-04-23",
+            "name": "Shakespeare Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-04-25",
+            "name": "Yom HaShoah",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-04-28",
+            "name": "St. George's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-05-01",
+            "name": "Yom HaAtzmaut",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-05-05",
+            "name": "Early May bank holiday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland), Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2025-05-16",
+            "name": "Lag B'Omer",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-05-26",
+            "name": "Spring bank holiday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland), Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2025-05-29",
+            "name": "Ascension Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-06-02",
+            "name": "Shavuot",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-06-07",
+            "name": "Eid al-Adha",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-06-08",
+            "name": "Pentecost",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-06-09",
+            "name": "Whit Monday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-06-14",
+            "name": "King's Birthday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-06-15",
+            "name": "Trinity Sunday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-06-15",
+            "name": "Father's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-06-19",
+            "name": "Corpus Christi",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-06-21",
+            "name": "June Solstice",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-06-22",
+            "name": "Windrush Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-06-27",
+            "name": "Muharram/Islamic New Year",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-07-06",
+            "name": "Ashura",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-07-12",
+            "name": "Battle of the Boyne",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-07-14",
+            "name": "Battle of the Boyne (Orangemen’s Day)",
+            "source": "GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2025-07-14",
+            "name": "Battle of the Boyne observed",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-08-03",
+            "name": "Tisha B'Av",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-08-04",
+            "name": "Summer bank holiday",
+            "source": "GOV.UK (scotland), Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2025-08-15",
+            "name": "Assumption of Mary",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-08-15",
+            "name": "Janmashtami (Smarta)",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-08-16",
+            "name": "Janmashtami",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-08-25",
+            "name": "Summer bank holiday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (northern-ireland), Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2025-08-26",
+            "name": "Ganesh Chaturthi",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-09-05",
+            "name": "Milad un Nabi (Mawlid)",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-09-22",
+            "name": "September Equinox",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-09-23",
+            "name": "Rosh Hashana",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-10-02",
+            "name": "Yom Kippur",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-10-04",
+            "name": "Feast of St Francis of Assisi",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-10-07",
+            "name": "First day of Sukkot",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-10-13",
+            "name": "Hoshana Rabbah",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-10-14",
+            "name": "Shemini Atzeret",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-10-15",
+            "name": "Simchat Torah",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-10-21",
+            "name": "Diwali/Deepavali",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-10-26",
+            "name": "Daylight Saving Time ends",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-10-31",
+            "name": "Halloween",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-11-01",
+            "name": "All Saints Day (Christian)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-01",
+            "name": "Islamophobia Awareness Month begins",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-01",
+            "name": "Mouth, Pancreatic and Lung Cancer Awareness Month",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-01",
+            "name": "Movember (Men’s Health Awareness Month)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-01",
+            "name": "World Vegan Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-01",
+            "name": "All Saints' Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-11-02",
+            "name": "All Souls Day (Christian)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-02",
+            "name": "El Día de los Muertos (Day of the Dead)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-02",
+            "name": "International Day against Violence and Bullying at School Including Cyberbullying",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-02",
+            "name": "All Souls' Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-11-05",
+            "name": "Guy Fawkes Night (Bonfire Night)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-05",
+            "name": "Guy Fawkes Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-11-08",
+            "name": "World Town Planning Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-09",
+            "name": "Remembrance Sunday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-11-10",
+            "name": "World Science Day for Peace and Development",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-11",
+            "name": "Armistice Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-12",
+            "name": "World Pneumonia Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-13",
+            "name": "World Kindness Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-14",
+            "name": "King Charles’ Birthday",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-14",
+            "name": "World Diabetes Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-16",
+            "name": "International Day for Tolerance",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-19",
+            "name": "International Men’s Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-19",
+            "name": "World Toilet Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-20",
+            "name": "Transgender Day of Remembrance",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-20",
+            "name": "World Children’s Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-25",
+            "name": "International Day for the Elimination of Violence Against Women",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-30",
+            "name": "Remembrance Day for Lost Species",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-30",
+            "name": "St Andrew’s Day (Scotland)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-11-30",
+            "name": "First Sunday of Advent",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-11-30",
+            "name": "St Andrew's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-12-01",
+            "name": "World Aids Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-01",
+            "name": "St Andrew’s Day",
+            "source": "GOV.UK (scotland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2025-12-01",
+            "name": "St Andrew's Day observed",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-12-02",
+            "name": "International Day for the Abolition of Slavery",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-03",
+            "name": "International Day of People with Disabilities",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-05",
+            "name": "International Volunteer Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-05",
+            "name": "World Soil Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-06",
+            "name": "St Nicholas Day (Christian)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-07",
+            "name": "Day of Hope",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-08",
+            "name": "Christmas Jumper Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-08",
+            "name": "Secular Bodhi Day (Buddhist)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-08",
+            "name": "Feast of the Immaculate Conception",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-12-10",
+            "name": "Human Rights Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-11",
+            "name": "International Mountain Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-15",
+            "name": "First Day of Hanukkah",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-12-16",
+            "name": "Dhanu Sankranti",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-18",
+            "name": "International Migrants Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-20",
+            "name": "International Human Solidarity Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-21",
+            "name": "December Solstice",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-12-22",
+            "name": "Winter Solstice",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-22",
+            "name": "Last day of Hanukkah",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-12-24",
+            "name": "Christmas Eve",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2025-12-25",
+            "name": "Christmas Day (Christian)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-25",
+            "name": "Christmas Day",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland), Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2025-12-26",
+            "name": "Boxing Day",
+            "source": "Young Citizens, GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland), Calendarific",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-28",
+            "name": "Holy Innocents (Christian)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-31",
+            "name": "Hogmanay – Scotland",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2025-12-31",
+            "name": "New Year's Eve",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-01-01",
+            "name": "New Year’s Day",
+            "source": "Young Citizens, GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland)",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-01-01",
+            "name": "Veganuary begins",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-01-01",
+            "name": "New Year's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-01-02",
+            "name": "2nd January",
+            "source": "GOV.UK (scotland), Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2026-01-04",
+            "name": "World Braille Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-01-05",
+            "name": "Twelfth Night",
+            "source": "Young Citizens, Calendarific",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-01-06",
+            "name": "Epiphany (Christian)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-01-06",
+            "name": "Epiphany",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-01-07",
+            "name": "Orthodox Christmas Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-01-08",
+            "name": "#EthnicityPayGap Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-01-13",
+            "name": "Maghi  (Sikh festival)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-01-14",
+            "name": "Orthodox New Year",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-01-15",
+            "name": "World Religion Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-01-16",
+            "name": "Birthday of Guru Har Rai (Sikh)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-01-16",
+            "name": "Isra and Mi'raj",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-01-18",
+            "name": "Winnie the Pooh Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-01-24",
+            "name": "International Day of Education",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-01-25",
+            "name": "Dydd Santes Dwynwen (Welsh Valentine’s Day)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-01-25",
+            "name": "Robert Burns Night (Scotland)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-01-25",
+            "name": "Burns Night",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-01-27",
+            "name": "Holocaust Memorial Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-01-27",
+            "name": "International Chocolate Cake Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-01-28",
+            "name": "Data Privacy Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-01",
+            "name": "Dignity Action Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-01",
+            "name": "Heart Month",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-01",
+            "name": "LGBT History Month begins",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-01",
+            "name": "World Hijab Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-01",
+            "name": "World Interfaith Harmony Week",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-02",
+            "name": "Candlemas (Christian)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-02",
+            "name": "World Wetlands Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-02",
+            "name": "Tu B'Shevat (Arbor Day)",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-02-04",
+            "name": "Rosa Parks’ birthday",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-04",
+            "name": "World Cancer Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-11",
+            "name": "International Day of Women and Girls in Science",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-12",
+            "name": "Red Hand Day for Child Soldiers",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-13",
+            "name": "World Radio Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-14",
+            "name": "National Nestbox Week",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-14",
+            "name": "St Valentine’s Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-14",
+            "name": "Valentine's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-02-15",
+            "name": "International Childhood Cancer Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-17",
+            "name": "Random Acts of Kindness Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-17",
+            "name": "Carnival / Shrove Tuesday / Pancake Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-02-17",
+            "name": "Lunar New Year",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-02-18",
+            "name": "Ramadan Start",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-02-18",
+            "name": "Carnival / Ash Wednesday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-02-20",
+            "name": "World Day of Social Justice",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-21",
+            "name": "International Mother Language Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-02-22",
+            "name": "World Thinking Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-01",
+            "name": "National Bed Month begins",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-01",
+            "name": "Ovarian Cancer Awareness Month",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-01",
+            "name": "Rare Diseases Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-01",
+            "name": "Self-injury Awareness Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-01",
+            "name": "St David’s Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-01",
+            "name": "Women’s History Month begins",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-01",
+            "name": "Zero Discrimination Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-01",
+            "name": "St. David's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-03-03",
+            "name": "World Wildlife Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-03",
+            "name": "Purim",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-03-08",
+            "name": "International Women’s Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-12",
+            "name": "World Kidney Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-13",
+            "name": "Commonwealth Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-15",
+            "name": "Lailat al-Qadr",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-03-15",
+            "name": "Mother's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-03-16",
+            "name": "Young Carers Action Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-17",
+            "name": "St Patrick’s Day",
+            "source": "Young Citizens, GOV.UK (northern-ireland)",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-17",
+            "name": "St Patrick's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-03-18",
+            "name": "Global Recycling Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-18",
+            "name": "Stop Child Sexual Exploitation Awareness Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-20",
+            "name": "International Day of Happiness",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-20",
+            "name": "Spring/Vernal Equinox",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-20",
+            "name": "World Oral Health Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-20",
+            "name": "Eid ul Fitr",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-03-20",
+            "name": "March Equinox",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-03-21",
+            "name": "International Day for the Elimination of Racial Discrimination",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-21",
+            "name": "International Day of Forests",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-21",
+            "name": "World Down Syndrome Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-21",
+            "name": "World Poetry Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-22",
+            "name": "World Water Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-23",
+            "name": "National Day of Reflection",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-23",
+            "name": "World Meteorological Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-24",
+            "name": "International Day for the Right to the Truth Concerning Gross Human Rights Violations & for the Dignity of Victims",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-24",
+            "name": "World Tuberculosis Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-25",
+            "name": "International Day of Remembrance of the Victims of Slavery & the Transatlantic Slave Trade",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-26",
+            "name": "Purple Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-29",
+            "name": "Palm Sunday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-03-29",
+            "name": "Daylight Saving Time starts",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-03-30",
+            "name": "World Bipolar Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-03-31",
+            "name": "International Transgender Day of Visibility",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-01",
+            "name": "April Fool’s Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-01",
+            "name": "National Pet Month",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-01",
+            "name": "Stress Awareness Month begins",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-02",
+            "name": "International Children’s Book Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-02",
+            "name": "World Autism Awareness Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-02",
+            "name": "Maundy Thursday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-04-02",
+            "name": "First day of Passover",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-04-03",
+            "name": "Good Friday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland), Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2026-04-04",
+            "name": "International Mine Awareness Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-04",
+            "name": "Holy Saturday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-04-05",
+            "name": "Passover begins (Jewish)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-05",
+            "name": "Easter Sunday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-04-06",
+            "name": "International Day of Sport Development & Peace",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-06",
+            "name": "Easter Monday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (northern-ireland), Calendarific, Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2026-04-07",
+            "name": "Day of Remembrance for the Victims of the Rwanda Genocide",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-07",
+            "name": "World Health Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-09",
+            "name": "Last day of Passover",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-04-10",
+            "name": "Orthodox Good Friday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-04-11",
+            "name": "Orthodox Holy Saturday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-04-12",
+            "name": "International Day for Street Children",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-12",
+            "name": "International Day of Human Space Flight",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-12",
+            "name": "Orthodox Easter",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-04-13",
+            "name": "Orthodox Easter Monday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-04-14",
+            "name": "Vaisakhi/Baisakhi (Sikh New Year)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-14",
+            "name": "Yom HaShoah",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-04-16",
+            "name": "World Voice Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-18",
+            "name": "International Day for Monuments & Sites",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-21",
+            "name": "Groundation Day (Rastafarian)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-22",
+            "name": "International Mother Earth Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-22",
+            "name": "National Stephen Lawrence Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-22",
+            "name": "Yom HaAtzmaut",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-04-22",
+            "name": "Stephen Lawrence Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-04-23",
+            "name": "Shakespeare Day",
+            "source": "Young Citizens, Calendarific",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-23",
+            "name": "St George’s Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-23",
+            "name": "World Book & Copyright Day, UNESCO",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-23",
+            "name": "St. George's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-04-25",
+            "name": "World Malaria Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-04-30",
+            "name": "International Jazz Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-01",
+            "name": "International Workers’ Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-01",
+            "name": "Local & Community History Month",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-01",
+            "name": "National Share a Story Month",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-01",
+            "name": "National Walking Month",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-03",
+            "name": "World Press Freedom Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-04",
+            "name": "International Firefighters’ Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-04",
+            "name": "Early May bank holiday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland), Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2026-05-05",
+            "name": "International Midwives Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-05",
+            "name": "World Hand Hygiene Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-05",
+            "name": "Lag B'Omer",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-05-08",
+            "name": "VE Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-08",
+            "name": "World Migratory Bird Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-08",
+            "name": "World Red Cross Day and Red Crescent Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-09",
+            "name": "Europe Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-12",
+            "name": "International Nurses’ Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-12",
+            "name": "ME Awareness Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-14",
+            "name": "Ascension Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-05-15",
+            "name": "International Day of Families",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-15",
+            "name": "Knife Crime Awareness Week",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-15",
+            "name": "National Smile Month begins",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-16",
+            "name": "International Boys Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-17",
+            "name": "International Day Against Homophobia and Transphobia",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-21",
+            "name": "World Day for Cultural Diversity Dialogue & Development",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-21",
+            "name": "World Meditation Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-22",
+            "name": "International Day for Biological Diversity",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-22",
+            "name": "Shavuot",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-05-23",
+            "name": "World Turtle Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-24",
+            "name": "Pentecost",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-05-25",
+            "name": "Africa Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-25",
+            "name": "Spring bank holiday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland), Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2026-05-25",
+            "name": "Whit Monday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-05-27",
+            "name": "Eid al-Adha",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-05-28",
+            "name": "Menstrual Hygiene Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-28",
+            "name": "World Hunger Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-29",
+            "name": "International Day of United Nations Peacekeepers",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-31",
+            "name": "World No Tobacco Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-05-31",
+            "name": "Trinity Sunday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-06-01",
+            "name": "Global Day of Parents",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-01",
+            "name": "Gypsy Roma and Traveller History Month",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-01",
+            "name": "Pride Month",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-01",
+            "name": "Volunteers’ Week",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-04",
+            "name": "International Day of Innocent Children Victims of Aggression",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-04",
+            "name": "Corpus Christi",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-06-05",
+            "name": "World Environment Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-08",
+            "name": "World Oceans Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-12",
+            "name": "World Day Against Child Labour",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-14",
+            "name": "World Blood Donor Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-17",
+            "name": "Clean Air Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-17",
+            "name": "World Day to Combat Desertification & Drought",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-17",
+            "name": "Muharram/Islamic New Year",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-06-19",
+            "name": "Juneteenth",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-20",
+            "name": "World Refugee Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-20",
+            "name": "King's Birthday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-06-21",
+            "name": "Make Music Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-21",
+            "name": "Summer Solstice",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-21",
+            "name": "World Humanist Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-21",
+            "name": "Father's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-06-21",
+            "name": "June Solstice",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-06-22",
+            "name": "Windrush Day",
+            "source": "Young Citizens, Calendarific",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-23",
+            "name": "World Female Ranger Week begins",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-06-26",
+            "name": "Ashura",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-07-01",
+            "name": "Plastic Free July begins",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-07-01",
+            "name": "Talk to Us – Samaritans Awareness Raising Month begins",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-07-03",
+            "name": "Plastic Bag Free day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-07-04",
+            "name": "American Independence Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-07-06",
+            "name": "International Kissing Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-07-11",
+            "name": "World Population Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-07-12",
+            "name": "Battle of the Boyne",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-07-13",
+            "name": "Battle of the Boyne (Orangemen’s Day)",
+            "source": "GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2026-07-13",
+            "name": "Battle of the Boyne observed",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-07-17",
+            "name": "World Day for International Justice",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-07-18",
+            "name": "Nelson Mandela Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-07-18",
+            "name": "South Asian Heritage Month begins",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-07-23",
+            "name": "Tisha B'Av",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-07-25",
+            "name": "World Drowning Prevention Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-07-30",
+            "name": "International Day of Friendship",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-07-30",
+            "name": "World Day Against Trafficking in Persons",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-07-30",
+            "name": "World Friendship Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-08-03",
+            "name": "Summer bank holiday",
+            "source": "GOV.UK (scotland), Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2026-08-12",
+            "name": "International Youth Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-08-13",
+            "name": "Obon (Buddist)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-08-15",
+            "name": "Victory in Japan Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-08-15",
+            "name": "Assumption of Mary",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-08-17",
+            "name": "Marcus Garvey’s Birthday",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-08-24",
+            "name": "Independence Day of Ukraine",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-08-26",
+            "name": "Milad un Nabi (Mawlid)",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-08-31",
+            "name": "Summer bank holiday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (northern-ireland), Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2026-09-01",
+            "name": "Childhood Cancer Awareness Month starts",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-01",
+            "name": "Organic September",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-01",
+            "name": "Secondhand September starts",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-01",
+            "name": "World Alzheimer’s Month",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-02",
+            "name": "Great Fire of London started in 1666",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-03",
+            "name": "Janmashtami (Smarta)",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-09-04",
+            "name": "Zero Waste Week begins",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-04",
+            "name": "Janmashtami",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-09-06",
+            "name": "Great Fire of London is put out 1666",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-10",
+            "name": "World Suicide Prevention Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-12",
+            "name": "End Digital Poverty Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-12",
+            "name": "Rosh Hashana",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-09-13",
+            "name": "Roald Dahl Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-15",
+            "name": "Battle of Britain Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-15",
+            "name": "International Day of Democracy",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-15",
+            "name": "World Afro Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-16",
+            "name": "International Day for the Preservation of the Ozone Layer",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-19",
+            "name": "International Talk Like a Pirate Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-19",
+            "name": "Recycle Week starts",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-21",
+            "name": "International Day of Peace",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-21",
+            "name": "World Alzheimer’s Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-21",
+            "name": "Yom Kippur",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-09-22",
+            "name": "World Car Free Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-23",
+            "name": "September Equinox",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-09-26",
+            "name": "European Day of Languages",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-09-26",
+            "name": "First day of Sukkot",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-10-01",
+            "name": "ADHD Awareness Month",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-01",
+            "name": "Black History Month begins",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-01",
+            "name": "Breast Cancer Awareness Month",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-01",
+            "name": "International Day of Older Persons",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-01",
+            "name": "National Cholesterol Month",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-01",
+            "name": "The Big Draw Festival",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-01",
+            "name": "Unblocktober",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-01",
+            "name": "World Postcard Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-02",
+            "name": "Hoshana Rabbah",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-10-03",
+            "name": "Shemini Atzeret",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-10-04",
+            "name": "World Animal Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-04",
+            "name": "World Space Week",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-04",
+            "name": "Feast of St Francis of Assisi",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-10-04",
+            "name": "Simchat Torah",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-10-05",
+            "name": "World Teacher Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-06",
+            "name": "National Poetry Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-08",
+            "name": "National Hate Crime Awareness Week",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-10",
+            "name": "Animal Road Accident Awareness Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-10",
+            "name": "World Mental Health Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-11",
+            "name": "International Day of the Girl Child",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-15",
+            "name": "Global Handwashing Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-18",
+            "name": "Anti-Slavery Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-18",
+            "name": "World Food Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-19",
+            "name": "International Pronouns Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-20",
+            "name": "Installation of Scriptures as Guru Granth (Sikh)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-22",
+            "name": "International Stammering Awareness Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-24",
+            "name": "UN Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-25",
+            "name": "Daylight Saving Time ends",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-10-31",
+            "name": "Halloween",
+            "source": "Young Citizens, Calendarific",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-10-31",
+            "name": "World Cities Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-01",
+            "name": "All Saints Day (Christian)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-01",
+            "name": "Islamophobia Awareness Month begins",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-01",
+            "name": "Mouth, Pancreatic and Lung Cancer Awareness Month",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-01",
+            "name": "Movember (Men’s Health Awareness Month)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-01",
+            "name": "World Vegan Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-01",
+            "name": "All Saints' Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-11-02",
+            "name": "All Souls Day (Christian)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-02",
+            "name": "El Día de los Muertos (Day of the Dead)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-02",
+            "name": "International Day against Violence and Bullying at School Including Cyberbullying",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-02",
+            "name": "All Souls' Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-11-05",
+            "name": "Guy Fawkes Night (Bonfire Night)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-05",
+            "name": "Guy Fawkes Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-11-08",
+            "name": "World Town Planning Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-08",
+            "name": "Remembrance Sunday",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-11-10",
+            "name": "World Science Day for Peace and Development",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-11",
+            "name": "Armistice Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-12",
+            "name": "World Pneumonia Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-13",
+            "name": "World Kindness Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-14",
+            "name": "King Charles’ Birthday",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-14",
+            "name": "World Diabetes Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-16",
+            "name": "International Day for Tolerance",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-19",
+            "name": "International Men’s Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-19",
+            "name": "World Toilet Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-20",
+            "name": "Transgender Day of Remembrance",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-20",
+            "name": "World Children’s Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-25",
+            "name": "International Day for the Elimination of Violence Against Women",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-29",
+            "name": "First Sunday of Advent",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-11-30",
+            "name": "Remembrance Day for Lost Species",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-30",
+            "name": "St Andrew’s Day (Scotland)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-11-30",
+            "name": "St Andrew’s Day",
+            "source": "GOV.UK (scotland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2026-11-30",
+            "name": "St Andrew's Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-12-01",
+            "name": "World Aids Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-02",
+            "name": "International Day for the Abolition of Slavery",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-03",
+            "name": "International Day of People with Disabilities",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-05",
+            "name": "International Volunteer Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-05",
+            "name": "World Soil Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-05",
+            "name": "First Day of Hanukkah",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-12-06",
+            "name": "St Nicholas Day (Christian)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-07",
+            "name": "Day of Hope",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-08",
+            "name": "Christmas Jumper Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-08",
+            "name": "Secular Bodhi Day (Buddhist)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-08",
+            "name": "Feast of the Immaculate Conception",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-12-10",
+            "name": "Human Rights Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-11",
+            "name": "International Mountain Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-12",
+            "name": "Last day of Hanukkah",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-12-16",
+            "name": "Dhanu Sankranti",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-18",
+            "name": "International Migrants Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-20",
+            "name": "International Human Solidarity Day",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-21",
+            "name": "December Solstice",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-12-22",
+            "name": "Winter Solstice",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-24",
+            "name": "Christmas Eve",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-12-25",
+            "name": "Christmas Day (Christian)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-25",
+            "name": "Christmas Day",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland), Calendarific",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2026-12-26",
+            "name": "Boxing Day",
+            "source": "Young Citizens, Calendarific",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-28",
+            "name": "Holy Innocents (Christian)",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-28",
+            "name": "Boxing Day",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2026-12-28",
+            "name": "Substitute Bank Holiday for Boxing Day",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2026-12-31",
+            "name": "Hogmanay – Scotland",
+            "source": "Young Citizens",
+            "category": "awareness"
+        },
+        {
+            "date": "2026-12-31",
+            "name": "New Year's Eve",
+            "source": "Calendarific",
+            "category": "public_or_international"
+        },
+        {
+            "date": "2027-01-01",
+            "name": "New Year’s Day",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2027-01-04",
+            "name": "2nd January",
+            "source": "GOV.UK (scotland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2027-03-17",
+            "name": "St Patrick’s Day",
+            "source": "GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2027-03-26",
+            "name": "Good Friday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2027-03-29",
+            "name": "Easter Monday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2027-05-03",
+            "name": "Early May bank holiday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2027-05-31",
+            "name": "Spring bank holiday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2027-07-12",
+            "name": "Battle of the Boyne (Orangemen’s Day)",
+            "source": "GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2027-08-02",
+            "name": "Summer bank holiday",
+            "source": "GOV.UK (scotland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2027-08-30",
+            "name": "Summer bank holiday",
+            "source": "GOV.UK (england-and-wales), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2027-11-30",
+            "name": "St Andrew’s Day",
+            "source": "GOV.UK (scotland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2027-12-27",
+            "name": "Christmas Day",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        },
+        {
+            "date": "2027-12-28",
+            "name": "Boxing Day",
+            "source": "GOV.UK (england-and-wales), GOV.UK (scotland), GOV.UK (northern-ireland)",
+            "category": "bank_holiday"
+        }
+    ]
+}
