@@ -1242,12 +1242,32 @@ if session_key in st.session_state:
                         y -= 5 * mm  # extra gap after staff section
 
                     # Draw remaining non-staff events normally
+                    # 🔹 Merge activities with identical times (e.g., "14:30 Gardening Club" + "14:30 Target Throw")
+                    merged_activities = {}
                     for line in other_lines:
+                        match = re.match(r"^(\d{1,2}:\d{2})\s*(.*)", line)
+                        if match:
+                            time, desc = match.groups()
+                            merged_activities.setdefault(time, []).append(
+                                desc.strip())
+                        else:
+                            merged_activities.setdefault(None, []).append(
+                                line.strip())
+
+                    # 🔹 Draw merged activity lines
+                    for time, desc_list in merged_activities.items():
+                        if time:
+                            combined_text = f"{time}: " + " → ".join(desc_list)
+                        else:
+                            combined_text = " → ".join(desc_list)
+
                         c.setFont("Helvetica-Bold", 15)
                         c.setFillColor(black)
                         x_start = 25 * mm
                         max_width = width - (2 * x_start)
-                        words = line.split()
+
+                        # Wrap combined line if needed
+                        words = combined_text.split()
                         current_line = ""
                         wrapped_lines = []
                         for word in words:
@@ -1260,6 +1280,7 @@ if session_key in st.session_state:
                                 current_line = test_line
                         if current_line:
                             wrapped_lines.append(current_line)
+
                         for wrapped in wrapped_lines:
                             c.drawString(x_start, y, wrapped.strip())
                             y -= 9 * mm
