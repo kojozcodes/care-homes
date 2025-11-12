@@ -33,6 +33,8 @@ from reportlab.lib.units import mm
 import requests
 from PIL import Image, ImageDraw, ImageFont
 import random
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
 
 # -------------------------
 # Page configuration
@@ -608,15 +610,6 @@ def fetch_pexels_images(keyword, orientation="landscape", size="medium", count=5
                 img_response.raise_for_status()
                 img_bytes = img_response.content
 
-                # Cache the image
-                cache_key = hashlib.md5(f"{keyword}_{photo['id']}".encode()).hexdigest()
-                cache_path = os.path.join(IMAGE_CACHE_DIR, f"{cache_key}.jpg")
-                try:
-                    with open(cache_path, "wb") as f:
-                        f.write(img_bytes)
-                except Exception:
-                    pass
-
                 images.append(img_bytes)
 
     except Exception:
@@ -632,6 +625,35 @@ def fetch_pexels_image(keyword, orientation="landscape", size="medium", page=1):
     """
     images = fetch_pexels_images(keyword, orientation, size, count=1, page=page)
     return images[0] if images else None
+
+
+def fetch_images_parallel(activities, page_numbers):
+    """
+    Fetch images for multiple activities in parallel.
+    Returns dict mapping activity index to list of image bytes.
+    """
+    results = {}
+
+    def fetch_for_activity(idx, activity, page_num):
+        keyword = get_activity_keyword(activity)
+        images = fetch_pexels_images(keyword, orientation="landscape", size="medium", count=5, page=page_num)
+        return idx, images, keyword
+
+    # Use ThreadPoolExecutor for parallel fetching
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        futures = []
+        for idx, (activity, page_num) in enumerate(zip(activities, page_numbers)):
+            future = executor.submit(fetch_for_activity, idx, activity, page_num)
+            futures.append(future)
+
+        for future in as_completed(futures):
+            try:
+                idx, images, keyword = future.result()
+                results[idx] = {"images": images, "keyword": keyword}
+            except Exception:
+                results[idx] = {"images": [], "keyword": ""}
+
+    return results
 
 
 def extract_activities_from_text(text):
@@ -668,72 +690,27 @@ def extract_activities_from_text(text):
     return activities
 
 
-def get_images_for_day_activities(day_text, max_images=3):
-    """
-    Get up to 3 images for a day's activities.
-    Returns list of image bytes (can be empty or have 1-3 images).
-    """
-    activities = extract_activities_from_text(day_text)
-
-    if not activities:
-        return []
-
-    # Get unique activities (up to max_images)
-    unique_activities = []
-    seen = set()
-    for activity in activities:
-        activity_lower = activity.lower().strip()
-        if activity_lower not in seen:
-            unique_activities.append(activity)
-            seen.add(activity_lower)
-            if len(unique_activities) >= max_images:
-                break
-
-    # Fetch images for each activity
-    images = []
-    for activity in unique_activities:
-        keyword = get_activity_keyword(activity)
-        image_bytes = fetch_pexels_image(keyword, orientation="landscape", size="medium")
-        if image_bytes:
-            images.append(image_bytes)
-
-    return images
-
-
 def get_default_image_layout(num_images, page_width, page_height):
     """
-    Get default positions and sizes for images.
+    Get default positions and sizes for images - vertically stacked on the right.
     Returns list of dicts with keys: x, y, width, height (in points)
     """
     layouts = []
 
-    # Convert mm to points (1mm = 2.83465 points)
-    text_area_right = page_width * 0.62
-    image_area_left = page_width * 0.64
-    image_area_width = page_width * 0.32
+    # Fixed positions and sizes matching your specification
+    # Image 1: X=560, Y=400, Width=240, Height=150
+    # Image 2: X=560, Y=220, Width=240, Height=150
+    # Image 3: X=560, Y=50, Width=240, Height=150
 
-    img_width = image_area_width - 10 * mm
-    available_height = page_height - 50 * mm - 20 * mm
+    default_layouts = [
+        {"x": 560, "y": 400, "width": 240, "height": 150},
+        {"x": 560, "y": 220, "width": 240, "height": 150},
+        {"x": 560, "y": 50, "width": 240, "height": 150}
+    ]
 
-    spacing = 8 * mm
-    total_spacing = spacing * (num_images - 1) if num_images > 1 else 0
-    img_height = (available_height - total_spacing) / num_images
-
-    max_img_height = img_width * 0.75
-    if img_height > max_img_height:
-        img_height = max_img_height
-
-    img_x = image_area_left + 5 * mm
-    img_y_start = page_height - 50 * mm
-
-    for idx in range(num_images):
-        img_y = img_y_start - (idx * (img_height + spacing))
-        layouts.append({
-            "x": img_x,
-            "y": img_y - img_height,  # Bottom-left corner
-            "width": img_width,
-            "height": img_height
-        })
+    # Return only the number of layouts needed
+    for idx in range(min(num_images, len(default_layouts))):
+        layouts.append(default_layouts[idx].copy())  # Use .copy() to avoid reference issues
 
     return layouts
 
@@ -747,14 +724,13 @@ def draw_weekly_page_with_custom_layout(c, width, height, day_obj, text, image_b
     # Define layout areas
     text_area_right = width * 0.62  # Text takes left 62%
 
-    # Draw day heading
+    # Draw day heading (LEFT ALIGNED)
     c.setFont("Helvetica-Bold", 40)
     day_str = f"{calendar.day_name[day_obj.weekday()]} {day_obj.day} {calendar.month_name[day_obj.month]}"
-    day_width = c.stringWidth(day_str, "Helvetica-Bold", 40)
-    c.drawString((text_area_right - day_width) / 2, height - 20 * mm, day_str)
+    c.drawString(10 * mm, height - 20 * mm, day_str)
 
-    # Draw disclaimer
-    c.setFont("Helvetica-Oblique", 14)
+    # Draw disclaimer (LEFT ALIGNED)
+    c.setFont("Helvetica-Oblique", 12)
     disclaimer_text = (
         "Activities may change due to unforeseen circumstances. "
         "Families are welcome to join. "
@@ -767,7 +743,8 @@ def draw_weekly_page_with_custom_layout(c, width, height, day_obj, text, image_b
     wrapped_lines = []
     for word in words:
         test_line = (current_line + " " + word).strip()
-        if c.stringWidth(test_line, "Helvetica-Oblique", 12) > max_text_width and current_line:
+        if c.stringWidth(test_line, "Helvetica-Oblique",
+                         12) > max_text_width and current_line:
             wrapped_lines.append(current_line)
             current_line = word
         else:
@@ -778,8 +755,7 @@ def draw_weekly_page_with_custom_layout(c, width, height, day_obj, text, image_b
     line_spacing = 6 * mm
     text_y = height - 30 * mm
     for line in wrapped_lines:
-        line_width = c.stringWidth(line, "Helvetica-Oblique", 12)
-        c.drawString((text_area_right - line_width) / 2, text_y, line)
+        c.drawString(10 * mm, text_y, line)  # LEFT ALIGNED
         text_y -= line_spacing
 
     y = text_y - 8 * mm
@@ -787,19 +763,21 @@ def draw_weekly_page_with_custom_layout(c, width, height, day_obj, text, image_b
     # Draw images with custom layout
     if image_bytes_list and image_layouts:
         try:
-            for idx, (image_bytes, layout) in enumerate(zip(image_bytes_list, image_layouts)):
+            for idx, (image_bytes, layout) in enumerate(
+                    zip(image_bytes_list, image_layouts)):
                 img = ImageReader(BytesIO(image_bytes))
 
                 # Draw rounded rectangle background
                 c.setFillColor(Color(0.95, 0.95, 0.95))
                 c.roundRect(layout["x"] - 3 * mm, layout["y"] - 3 * mm,
-                           layout["width"] + 6 * mm, layout["height"] + 6 * mm,
-                           8, fill=1, stroke=0)
+                            layout["width"] + 6 * mm,
+                            layout["height"] + 6 * mm,
+                            8, fill=1, stroke=0)
 
                 # Draw image
                 c.drawImage(img, layout["x"], layout["y"],
-                           width=layout["width"], height=layout["height"],
-                           preserveAspectRatio=True, mask="auto")
+                            width=layout["width"], height=layout["height"],
+                            preserveAspectRatio=True, mask="auto")
 
         except Exception as e:
             # Silently fail - images are optional
@@ -826,7 +804,8 @@ def draw_weekly_page_with_custom_layout(c, width, height, day_obj, text, image_b
         max_width = text_area_right - 20 * mm
         for word in words:
             test_line = (current_line + " " + word).strip()
-            if c.stringWidth(test_line, "Helvetica-Oblique", 15) > max_width and current_line:
+            if c.stringWidth(test_line, "Helvetica-Oblique",
+                             15) > max_width and current_line:
                 wrapped_staff.append(current_line)
                 current_line = word
             else:
@@ -853,12 +832,16 @@ def draw_weekly_page_with_custom_layout(c, width, height, day_obj, text, image_b
 
     for time, desc_list in merged_activities.items():
         if all(d.isupper() for d in desc_list):
-            combined_text = (" / ".join(desc_list) if time is None else f"{time}: " + " / ".join(desc_list))
+            combined_text = (" / ".join(
+                desc_list) if time is None else f"{time}: " + " / ".join(
+                desc_list))
             font_size = 15
             c.setFont("Helvetica-Bold", font_size)
             c.setFillColor(black)
         else:
-            combined_text = (" → ".join(desc_list) if time is None else f"{time}: " + " → ".join(desc_list))
+            combined_text = (" → ".join(
+                desc_list) if time is None else f"{time}: " + " → ".join(
+                desc_list))
             font_size = 22
             c.setFont("Helvetica-Bold", font_size)
             c.setFillColor(Color(0.1, 0.1, 0.1))
@@ -871,7 +854,8 @@ def draw_weekly_page_with_custom_layout(c, width, height, day_obj, text, image_b
         wrapped_lines = []
         for word in words:
             test_line = (current_line + " " + word).strip()
-            if c.stringWidth(test_line, "Helvetica-Bold", font_size) > max_width_text and current_line:
+            if c.stringWidth(test_line, "Helvetica-Bold",
+                             font_size) > max_width_text and current_line:
                 wrapped_lines.append(current_line)
                 current_line = word
             else:
@@ -888,7 +872,9 @@ def draw_weekly_page_with_custom_layout(c, width, height, day_obj, text, image_b
             break
 
 
-def create_preview_image_with_layout(width, height, day_obj, text, image_bytes_list=None, image_layouts=None):
+def create_preview_image_with_layout(width, height, day_obj, text,
+                                     image_bytes_list=None,
+                                     image_layouts=None):
     """
     Create a preview image using PIL that matches the PDF layout exactly.
     Returns PIL Image object.
@@ -902,11 +888,16 @@ def create_preview_image_with_layout(width, height, day_obj, text, image_bytes_l
 
     # Try to load fonts (matching PDF sizes)
     try:
-        title_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 40)
-        disclaimer_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Oblique.ttf", 12)
-        staff_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Oblique.ttf", 15)
-        activity_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 22)
-        holiday_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 15)
+        title_font = ImageFont.truetype(
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 40)
+        disclaimer_font = ImageFont.truetype(
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Oblique.ttf", 12)
+        staff_font = ImageFont.truetype(
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Oblique.ttf", 15)
+        activity_font = ImageFont.truetype(
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 22)
+        holiday_font = ImageFont.truetype(
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 15)
     except:
         # Fallback to default fonts with approximate sizes
         title_font = ImageFont.load_default()
@@ -915,20 +906,13 @@ def create_preview_image_with_layout(width, height, day_obj, text, image_bytes_l
         activity_font = ImageFont.load_default()
         holiday_font = ImageFont.load_default()
 
-    # Draw day heading (matching PDF position)
+    # Draw day heading (LEFT ALIGNED - matching PDF position)
     day_str = f"{calendar.day_name[day_obj.weekday()]} {day_obj.day} {calendar.month_name[day_obj.month]}"
-    # Center in left area
-    try:
-        bbox = draw.textbbox((0, 0), day_str, font=title_font)
-        day_width = bbox[2] - bbox[0]
-    except:
-        day_width = len(day_str) * 20  # Fallback estimate
-
-    day_x = (text_area_right - day_width) // 2
+    day_x = int(10 * 2.83465)  # 10mm from left
     day_y = int(20 * 2.83465)  # 20mm from top
     draw.text((day_x, day_y), day_str, fill='black', font=title_font)
 
-    # Draw disclaimer (matching PDF position and wrapping)
+    # Draw disclaimer (LEFT ALIGNED - matching PDF position and wrapping)
     disclaimer_text = (
         "Activities may change due to unforeseen circumstances. "
         "Families are welcome to join. "
@@ -957,34 +941,34 @@ def create_preview_image_with_layout(width, height, day_obj, text, image_bytes_l
     if current_line:
         wrapped_lines.append(current_line)
 
-    # Draw wrapped disclaimer
+    # Draw wrapped disclaimer (LEFT ALIGNED)
     line_spacing = int(6 * 2.83465)
     text_y = int(30 * 2.83465)  # 30mm from top
+    line_x = int(10 * 2.83465)  # 10mm from left
 
     for line in wrapped_lines:
-        try:
-            bbox = draw.textbbox((0, 0), line, font=disclaimer_font)
-            line_width = bbox[2] - bbox[0]
-        except:
-            line_width = len(line) * 7
-        line_x = (text_area_right - line_width) // 2
-        draw.text((line_x, text_y), line, fill='gray', font=disclaimer_font)
+        draw.text((line_x, text_y), line, fill='gray',
+                  font=disclaimer_font)
         text_y += line_spacing
 
     y_pos = text_y + int(8 * 2.83465)  # 8mm gap
 
     # Draw images with custom layout (matching PDF)
     if image_bytes_list and image_layouts:
-        for idx, (image_bytes, layout) in enumerate(zip(image_bytes_list, image_layouts)):
+        for idx, (image_bytes, layout) in enumerate(
+                zip(image_bytes_list, image_layouts)):
             try:
                 pil_img = Image.open(BytesIO(image_bytes))
 
                 # Resize to fit layout
-                pil_img = pil_img.resize((int(layout["width"]), int(layout["height"])), Image.Resampling.LANCZOS)
+                pil_img = pil_img.resize(
+                    (int(layout["width"]), int(layout["height"])),
+                    Image.Resampling.LANCZOS)
 
                 # Draw gray background (matching PDF rounded rectangle)
                 bg_x = int(layout["x"] - 3 * 2.83465)
-                bg_y = int(height - layout["y"] - layout["height"] - 3 * 2.83465)  # Flip Y
+                bg_y = int(height - layout["y"] - layout[
+                    "height"] - 3 * 2.83465)  # Flip Y
                 bg_w = int(layout["width"] + 6 * 2.83465)
                 bg_h = int(layout["height"] + 6 * 2.83465)
 
@@ -996,7 +980,8 @@ def create_preview_image_with_layout(width, height, day_obj, text, image_bytes_l
 
                 # Paste image
                 img_x = int(layout["x"])
-                img_y = int(height - layout["y"] - layout["height"])  # Flip Y for PIL
+                img_y = int(
+                    height - layout["y"] - layout["height"])  # Flip Y for PIL
                 img.paste(pil_img, (img_x, img_y))
 
             except Exception as e:
@@ -1042,7 +1027,8 @@ def create_preview_image_with_layout(width, height, day_obj, text, image_bytes_l
             wrapped_staff.append(current_line)
 
         for wrapped in wrapped_staff:
-            draw.text((int(10 * 2.83465), y_pos), wrapped, fill=staff_blue, font=staff_font)
+            draw.text((int(10 * 2.83465), y_pos), wrapped, fill=staff_blue,
+                      font=staff_font)
             y_pos += int(9 * 2.83465)
         y_pos += int(5 * 2.83465)
 
@@ -1059,14 +1045,19 @@ def create_preview_image_with_layout(width, height, day_obj, text, image_bytes_l
     for time, desc_list in merged_activities.items():
         # Check if all uppercase (holiday)
         if all(d.isupper() for d in desc_list):
-            combined_text = (" / ".join(desc_list) if time is None else f"{time}: " + " / ".join(desc_list))
+            combined_text = (" / ".join(
+                desc_list) if time is None else f"{time}: " + " / ".join(
+                desc_list))
             current_font = holiday_font
             font_color = (0, 0, 0)  # Black
             line_spacing_val = int(7 * 2.83465)
         else:
-            combined_text = (" → ".join(desc_list) if time is None else f"{time}: " + " → ".join(desc_list))
+            combined_text = (" → ".join(
+                desc_list) if time is None else f"{time}: " + " → ".join(
+                desc_list))
             current_font = activity_font
-            font_color = (26, 26, 26)  # Dark gray matching Color(0.1, 0.1, 0.1)
+            font_color = (26, 26,
+                          26)  # Dark gray matching Color(0.1, 0.1, 0.1)
             line_spacing_val = int(8 * 2.83465)
 
         x_start = int(10 * 2.83465)
@@ -1094,7 +1085,8 @@ def create_preview_image_with_layout(width, height, day_obj, text, image_bytes_l
             wrapped_lines.append(current_line)
 
         for wrapped in wrapped_lines:
-            draw.text((x_start, y_pos), wrapped.strip(), fill=font_color, font=current_font)
+            draw.text((x_start, y_pos), wrapped.strip(), fill=font_color,
+                      font=current_font)
             y_pos += line_spacing_val
 
         y_pos += int(6 * 2.83465)  # Gap between activities
@@ -1141,6 +1133,7 @@ def get_weeks_in_month(year, month):
 # -------------------------
 SETTINGS_FILE = "calendar_settings.json"
 
+
 def load_settings():
     if os.path.exists(SETTINGS_FILE):
         try:
@@ -1149,6 +1142,7 @@ def load_settings():
         except Exception:
             return {}
     return {}
+
 
 def save_settings(data):
     try:
@@ -1191,34 +1185,38 @@ with col1:
                          index=dt.date.today().month - 1,
                          format_func=lambda x: calendar.month_name[x])
 with col2:
-    title = st.text_input("Calendar Title", f"{calendar.month_name[month]} {year}")
-    disclaimer = st.text_input("Disclaimer", "Activities subject to change. Please confirm with staff.")
+    title = st.text_input("Calendar Title",
+                          f"{calendar.month_name[month]} {year}")
+    disclaimer = st.text_input("Disclaimer",
+                               "Activities subject to change. Please confirm with staff.")
 
 st.markdown("### 📋 CSV Upload Instructions")
 with st.expander("🧑‍💼 Staff Rota CSV Format (Example)"):
     st.write("""
-    **Required Headers:**
-    - `date` → Date in format `YYYY-MM-DD`
-    - `staff` → Staff member's full name  
-    - `shift_start` → Start time (e.g. `09:00`)
-    - `shift_end` → End time (e.g. `16:30`)
-    - `role` → (Optional) Staff role or position
-    """)
+            **Required Headers:**
+            - `date` → Date in format `YYYY-MM-DD`
+            - `staff` → Staff member's full name  
+            - `shift_start` → Start time (e.g. `09:00`)
+            - `shift_end` → End time (e.g. `16:30`)
+            - `role` → (Optional) Staff role or position
+            """)
 
 with st.expander("🎯 Activities CSV Format (Example)"):
     st.write("""
-    **Required Headers:**
-    - `name` → Activity name  
-    - `preferred_days` → Day(s) of week, separated by `;` (e.g. `Mon; Wed; Fri`)  
-    - `preferred_time` → Start time (e.g. `14:30`)  
-    - `frequency` → Number of times per month  
-    - `staff_required` → Number of staff required for the activity  
-    - `notes` → (Optional) Any notes or description  
-    """)
+            **Required Headers:**
+            - `name` → Activity name  
+            - `preferred_days` → Day(s) of week, separated by `;` (e.g. `Mon; Wed; Fri`)  
+            - `preferred_time` → Start time (e.g. `14:30`)  
+            - `frequency` → Number of times per month  
+            - `staff_required` → Number of staff required for the activity  
+            - `notes` → (Optional) Any notes or description  
+            """)
 
 rota_df = parse_csv(st.file_uploader("📂 Upload Staff Rota CSV", type=["csv"]))
-activities_df = parse_csv(st.file_uploader("📂 Upload Activities CSV", type=["csv"]))
-bg_file = st.file_uploader("Background Image (optional)", type=["png", "jpg", "jpeg"])
+activities_df = parse_csv(
+    st.file_uploader("📂 Upload Activities CSV", type=["csv"]))
+bg_file = st.file_uploader("Background Image (optional)",
+                           type=["png", "jpg", "jpeg"])
 
 # Load and persist settings
 if "settings" not in st.session_state:
@@ -1227,17 +1225,21 @@ if "settings" not in st.session_state:
 saved_weekly = st.session_state["settings"].get("weekly_rules",
                                                 "Film Night:Thu:18:00\nDogs for Health:Thu:11:00\nReminiscence:Sat:18:00")
 saved_daily = st.session_state["settings"].get("daily_rules",
-                                              "Morning Exercise:09:00\nNews Headlines:10:00")
+                                               "Morning Exercise:09:00\nNews Headlines:10:00")
 
-fixed_rules_text = st.text_area("Fixed Weekly Rules (e.g. Film Night:Thu:18:00)",
-                                value=saved_weekly, key="weekly_rules_input")
+fixed_rules_text = st.text_area(
+    "Fixed Weekly Rules (e.g. Film Night:Thu:18:00)",
+    value=saved_weekly, key="weekly_rules_input")
 
-daily_rules_text = st.text_area("Fixed Daily Rules (e.g. Morning Exercise:09:00)",
-                                value=saved_daily, key="daily_rules_input")
+daily_rules_text = st.text_area(
+    "Fixed Daily Rules (e.g. Morning Exercise:09:00)",
+    value=saved_daily, key="daily_rules_input")
 
 if st.button("💾 Save Default Rules"):
-    st.session_state["settings"]["weekly_rules"] = st.session_state["weekly_rules_input"]
-    st.session_state["settings"]["daily_rules"] = st.session_state["daily_rules_input"]
+    st.session_state["settings"]["weekly_rules"] = st.session_state[
+        "weekly_rules_input"]
+    st.session_state["settings"]["daily_rules"] = st.session_state[
+        "daily_rules_input"]
     save_settings(st.session_state["settings"])
     st.success("✅ Default rules saved successfully!")
 
@@ -1250,7 +1252,8 @@ for line in fixed_rules_text.splitlines():
         time = parts[2] if len(parts) > 2 else ""
         title_txt = parts[0]
         try:
-            weekday = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"].index(day)
+            weekday = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"].index(
+                day)
         except ValueError:
             continue
         rules.append({"weekday": weekday, "time": time, "title": title_txt})
@@ -1271,7 +1274,8 @@ for line in daily_rules_text.splitlines():
 include_holidays = st.checkbox("Include UK National Holidays", True)
 
 # Reset selected holidays when month/year changes
-if "last_month" not in st.session_state or st.session_state.get("last_month") != month or st.session_state.get("last_year") != year:
+if "last_month" not in st.session_state or st.session_state.get(
+        "last_month") != month or st.session_state.get("last_year") != year:
     st.session_state["selected_holidays"] = []
     st.session_state["last_month"] = month
     st.session_state["last_year"] = year
@@ -1294,23 +1298,24 @@ if include_holidays:
         saved_selection = set(st.session_state.get("selected_holidays", []))
         current_selection = set()
         if not saved_selection:
-            all_holiday_names = {hname for hlist in holidays_by_day.values() for hname in hlist}
+            all_holiday_names = {hname for hlist in holidays_by_day.values()
+                                 for hname in hlist}
             saved_selection = all_holiday_names
 
         st.markdown("""
-        <style>
-        .day-block {
-            border: 1px solid #aaa;
-            border-radius: 6px;
-            padding: 6px 8px;
-            margin: 4px 0;
-        }
-        .day-header {
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
-        </style>
-        """, unsafe_allow_html=True)
+                <style>
+                .day-block {
+                    border: 1px solid #aaa;
+                    border-radius: 6px;
+                    padding: 6px 8px;
+                    margin: 4px 0;
+                }
+                .day-header {
+                    font-weight: bold;
+                    margin-bottom: 4px;
+                }
+                </style>
+                """, unsafe_allow_html=True)
 
         month_days = calendar.monthcalendar(year, month)
         for week in month_days:
@@ -1321,9 +1326,12 @@ if include_holidays:
                 date_obj = dt.date(year, month, day)
                 day_holidays = holidays_by_day.get(date_obj, [])
                 with cols[c_idx]:
-                    st.markdown(f"<div class='day-block'><div class='day-header'>{calendar.month_abbr[month]} {day}</div>", unsafe_allow_html=True)
+                    st.markdown(
+                        f"<div class='day-block'><div class='day-header'>{calendar.month_abbr[month]} {day}</div>",
+                        unsafe_allow_html=True)
                     if not day_holidays:
-                        st.markdown("<em>No holidays</em>", unsafe_allow_html=True)
+                        st.markdown("<em>No holidays</em>",
+                                    unsafe_allow_html=True)
                     else:
                         for name in sorted(set(day_holidays)):
                             key = f"hol_{year}-{month:02d}-{day:02d}_{name}"
@@ -1343,13 +1351,17 @@ st.write("## Preview & Edit Monthly Calendar")
 session_key = f"{year}-{month:02d}"
 
 # Reset preview when changing month/year
-if "last_preview_year" not in st.session_state or st.session_state.get("last_preview_year") != year or st.session_state.get("last_preview_month") != month:
+if "last_preview_year" not in st.session_state or st.session_state.get(
+        "last_preview_year") != year or st.session_state.get(
+        "last_preview_month") != month:
     st.session_state["last_preview_year"] = year
     st.session_state["last_preview_month"] = month
 
 if st.button("Preview Calendar"):
     with st.spinner("Generating preview..."):
-        daymap = seat_activity_into_calendar(year, month, activities_df, rota_df, rules, include_holidays, daily_rules)
+        daymap = seat_activity_into_calendar(year, month, activities_df,
+                                             rota_df, rules, include_holidays,
+                                             daily_rules)
         st.session_state[session_key] = {}
         for d, events in daymap.items():
             lines = []
@@ -1365,7 +1377,8 @@ if st.button("Preview Calendar"):
     st.rerun()
 
 if session_key in st.session_state:
-    st.subheader(f"📝 Edit Calendar for {calendar.month_name[month]} {year} Before Generating PDF")
+    st.subheader(
+        f"📝 Edit Calendar for {calendar.month_name[month]} {year} Before Generating PDF")
     month_days = calendar.monthcalendar(year, month)
     for week in month_days:
         cols = st.columns(7)
@@ -1376,7 +1389,9 @@ if session_key in st.session_state:
                 continue
             d = dt.date(year, month, day)
             with cols[c_idx]:
-                st.text_area(f"{day}", st.session_state[session_key].get(d, ""), key=f"{session_key}_{d}", height=180)
+                st.text_area(f"{day}",
+                             st.session_state[session_key].get(d, ""),
+                             key=f"{session_key}_{d}", height=180)
 
     if st.button("🔄 Reset This Month's Edits"):
         st.session_state.pop(session_key, None)
@@ -1393,7 +1408,8 @@ if session_key in st.session_state:
             for k, v in st.session_state.items()
             if k.startswith(session_key + "_")
         }
-        pdf_buf = draw_calendar_pdf(title, disclaimer, year, month, edited_texts, background_bytes=bg_bytes)
+        pdf_buf = draw_calendar_pdf(title, disclaimer, year, month,
+                                    edited_texts, background_bytes=bg_bytes)
         st.success("✅ A3 PDF calendar generated successfully!")
         st.download_button(
             "📥 Download Calendar (A3 Landscape PDF)",
@@ -1411,8 +1427,11 @@ if session_key in st.session_state:
     if not weeks:
         st.info("No week ranges found for this month.")
     else:
-        week_labels = [f"Week {i+1}: {w[0].strftime('%b %d')} – {w[1].strftime('%b %d')}" for i, w in enumerate(weeks)]
-        selected_week_idx = st.selectbox("📆 Select Week to Generate", range(len(weeks)),
+        week_labels = [
+            f"Week {i + 1}: {w[0].strftime('%b %d')} – {w[1].strftime('%b %d')}"
+            for i, w in enumerate(weeks)]
+        selected_week_idx = st.selectbox("📆 Select Week to Generate",
+                                         range(len(weeks)),
                                          format_func=lambda i: week_labels[i])
         selected_week_range = weeks[selected_week_idx]
 
@@ -1452,11 +1471,13 @@ if session_key in st.session_state:
             col_prev, col_next, col_reset = st.columns([1, 1, 1])
             with col_prev:
                 if st.button("⬅️ Previous Day"):
-                    st.session_state.preview_day_idx = max(0, st.session_state.preview_day_idx - 1)
+                    st.session_state.preview_day_idx = max(0,
+                                                           st.session_state.preview_day_idx - 1)
                     st.rerun()
             with col_next:
                 if st.button("Next Day ➡️"):
-                    st.session_state.preview_day_idx = min(total_days - 1, st.session_state.preview_day_idx + 1)
+                    st.session_state.preview_day_idx = min(total_days - 1,
+                                                           st.session_state.preview_day_idx + 1)
                     st.rerun()
             with col_reset:
                 if st.button("🔄 Reset Layout"):
@@ -1470,11 +1491,12 @@ if session_key in st.session_state:
             current_day = week_days[st.session_state.preview_day_idx]
             day_key = current_day.isoformat()
 
-            text = st.session_state.get(f"{session_key}_{current_day}", "").strip()
+            text = st.session_state.get(f"{session_key}_{current_day}",
+                                        "").strip()
             if not text:
                 text = "(No activities planned)"
 
-            # Extract activities for image fetching
+                # Extract activities for image fetching
             activities = extract_activities_from_text(text)
             unique_activities = []
             seen = set()
@@ -1488,7 +1510,7 @@ if session_key in st.session_state:
             max_selectable = 3
 
             # -------------------------
-            # Image Selection Interface
+            # Image Selection Interface with Parallel Loading
             # -------------------------
             st.markdown("### 🖼️ Step 1: Choose Images for Each Activity")
             st.info(
@@ -1504,31 +1526,48 @@ if session_key in st.session_state:
                 if "image_page_numbers" not in st.session_state:
                     st.session_state.image_page_numbers = {}
 
+                # Initialize page numbers for all activities
+                for act_idx, activity in enumerate(unique_activities):
+                    activity_key = f"{day_key}_{act_idx}"
+                    if activity_key not in st.session_state.image_page_numbers:
+                        st.session_state.image_page_numbers[activity_key] = 1
+
+                # Check if we need to fetch images for any activities
+                activities_to_fetch = []
+                page_numbers_to_fetch = []
+
+                for act_idx, activity in enumerate(unique_activities):
+                    activity_key = f"{day_key}_{act_idx}"
+                    if activity_key not in st.session_state.image_options:
+                        activities_to_fetch.append(activity)
+                        page_numbers_to_fetch.append(
+                            st.session_state.image_page_numbers[activity_key])
+
+                # Fetch all missing images in parallel
+                if activities_to_fetch:
+                    with st.spinner(
+                            f"Loading images for {len(activities_to_fetch)} activities..."):
+                        results = fetch_images_parallel(activities_to_fetch,
+                                                        page_numbers_to_fetch)
+
+                        # Store results in session state
+                        fetch_idx = 0
+                        for act_idx, activity in enumerate(unique_activities):
+                            activity_key = f"{day_key}_{act_idx}"
+                            if activity_key not in st.session_state.image_options:
+                                if fetch_idx in results:
+                                    st.session_state.image_options[
+                                        activity_key] = results[fetch_idx][
+                                        "images"]
+                                fetch_idx += 1
+
+                # Display all activities with their images
                 for act_idx, activity in enumerate(unique_activities):
                     st.markdown(f"**Activity {act_idx + 1}: {activity}**")
 
                     activity_key = f"{day_key}_{act_idx}"
-
-                    # Initialize page number for this activity
-                    if activity_key not in st.session_state.image_page_numbers:
-                        st.session_state.image_page_numbers[activity_key] = 1
-
-                    # Check if we need to fetch options
-                    if activity_key not in st.session_state.image_options:
-                        keyword = get_activity_keyword(activity)
-                        with st.spinner(
-                                f"Fetching images for '{activity}' using keyword: '{keyword}'..."):
-                            page_num = st.session_state.image_page_numbers[
-                                activity_key]
-                            options = fetch_pexels_images(keyword,
-                                                          orientation="landscape",
-                                                          size="medium",
-                                                          count=5,
-                                                          page=page_num)
-                        st.session_state.image_options[
-                            activity_key] = options
-
-                    options = st.session_state.image_options[activity_key]
+                    options = st.session_state.image_options.get(activity_key,
+                                                                 [])
 
                     if not options:
                         st.warning(f"No images found for '{activity}'")
@@ -1556,18 +1595,17 @@ if session_key in st.session_state:
                             # Increment page number to get different results
                             st.session_state.image_page_numbers[
                                 activity_key] += 1
-                            page_num = \
-                            st.session_state.image_page_numbers[
+                            page_num = st.session_state.image_page_numbers[
                                 activity_key]
-                            keyword = get_activity_keyword(
-                                activity)
+                            keyword = get_activity_keyword(activity)
+
                             with st.spinner(
-                                    f"Fetching new images for '{activity}' (page {page_num}) using keyword: '{keyword}'..."):
-                                new_options = fetch_pexels_images(
-                                    keyword,
-                                    orientation="landscape",
-                                    size="medium", count=5,
-                                    page=page_num)
+                                    f"Fetching new images for '{activity}' (page {page_num})..."):
+                                new_options = fetch_pexels_images(keyword,
+                                                                  orientation="landscape",
+                                                                  size="medium",
+                                                                  count=5,
+                                                                  page=page_num)
 
                             # Update options even if empty (to show "no more results")
                             st.session_state.image_options[
@@ -1579,11 +1617,11 @@ if session_key in st.session_state:
                                     activity_key] = 1
                                 with st.spinner(
                                         f"No more results. Fetching from page 1 using keyword: '{keyword}'..."):
-                                    new_options = fetch_pexels_images(
-                                        keyword,
-                                        orientation="landscape",
-                                        size="medium", count=5,
-                                        page=1)
+                                    new_options = fetch_pexels_images(keyword,
+                                                                      orientation="landscape",
+                                                                      size="medium",
+                                                                      count=5,
+                                                                      page=1)
                                 st.session_state.image_options[
                                     activity_key] = new_options
 
@@ -1611,7 +1649,8 @@ if session_key in st.session_state:
 
             # Initialize or get layouts for this day
             if day_key not in st.session_state.image_layouts and images_list:
-                st.session_state.image_layouts[day_key] = get_default_image_layout(
+                st.session_state.image_layouts[
+                    day_key] = get_default_image_layout(
                     len(images_list), page_width, page_height
                 )
 
@@ -1621,15 +1660,26 @@ if session_key in st.session_state:
             if images_list and current_layouts:
                 st.markdown("### 📐 Step 2: Adjust Image Positions and Sizes")
 
+                # Define default layouts
+                default_layouts = [
+                    {"x": 560, "y": 400, "width": 240, "height": 150},
+                    {"x": 560, "y": 220, "width": 240, "height": 150},
+                    {"x": 560, "y": 50, "width": 240, "height": 150}
+                ]
+
                 for idx in range(len(images_list)):
                     # Ensure layout entry exists for each image
                     if idx >= len(current_layouts):
-                        current_layouts.append({
-                            "x": 50,
-                            "y": 50,
-                            "width": int(page_width * 0.3),
-                            "height": int(page_height * 0.25)
-                        })
+                        if idx < len(default_layouts):
+                            current_layouts.append(default_layouts[idx].copy())
+                        else:
+                            # Fallback for more than 3 images
+                            current_layouts.append({
+                                "x": 560,
+                                "y": 50,
+                                "width": 240,
+                                "height": 150
+                            })
 
                     with st.expander(f"Image {idx + 1} Position Controls",
                                      expanded=(idx == 0)):
@@ -1690,19 +1740,23 @@ if session_key in st.session_state:
                     page_width, page_height, current_day, text,
                     images_list, current_layouts
                 )
-                st.image(preview_img, use_container_width=True, caption=f"Day {st.session_state.preview_day_idx + 1} of {total_days}")
+                st.image(preview_img, use_container_width=True,
+                         caption=f"Day {st.session_state.preview_day_idx + 1} of {total_days}")
 
             elif not images_list:
-                st.info("📝 Select images in Step 1 above to see the preview and layout controls.")
+                st.info(
+                    "🔍 Select images in Step 1 above to see the preview and layout controls.")
 
         else:
             st.info("Please select a valid week to preview.")
 
-        # --- Generate selected week ---
+            # --- Generate selected week ---
         if st.button("📅 Generate Selected Week (A4 Landscape)"):
-            with st.spinner(f"Generating PDF for {week_labels[selected_week_idx]}..."):
+            with st.spinner(
+                    f"Generating PDF for {week_labels[selected_week_idx]}..."):
                 start_date, end_date = selected_week_range
-                week_days = [start_date + dt.timedelta(days=i) for i in range((end_date - start_date).days + 1)]
+                week_days = [start_date + dt.timedelta(days=i) for i in
+                             range((end_date - start_date).days + 1)]
 
                 buf = BytesIO()
                 c = canvas.Canvas(buf, pagesize=landscape(A4))
@@ -1750,15 +1804,16 @@ if session_key in st.session_state:
 
                 c.save()
                 buf.seek(0)
-                st.success(f"✅ PDF for {week_labels[selected_week_idx]} generated successfully!")
+                st.success(
+                    f"✅ PDF for {week_labels[selected_week_idx]} generated successfully!")
                 st.download_button(
                     "📥 Download Selected Week (A4 Landscape)",
                     data=buf,
-                    file_name=f"week_{selected_week_idx+1}_{year}_{month:02d}.pdf",
+                    file_name=f"week_{selected_week_idx + 1}_{year}_{month:02d}.pdf",
                     mime="application/pdf",
                 )
 
-        # --- Generate all weeks ---
+            # --- Generate all weeks ---
         if st.button("📅 Generate All Weeks (A4 Landscape)"):
             with st.spinner("Generating PDFs for all weeks..."):
                 all_week_buffers = []
@@ -1767,7 +1822,8 @@ if session_key in st.session_state:
                     c = canvas.Canvas(buf, pagesize=landscape(A4))
                     width, height = landscape(A4)
 
-                    week_days = [start_date + dt.timedelta(days=i) for i in range((end_date - start_date).days + 1)]
+                    week_days = [start_date + dt.timedelta(days=i) for i in
+                                 range((end_date - start_date).days + 1)]
                     for d in week_days:
                         text = st.session_state.get(f"{session_key}_{d}",
                                                     "").strip()
@@ -1831,4 +1887,4 @@ if session_key in st.session_state:
                     mime="application/pdf",
                 )
 
-# End of file
+        # End of file
