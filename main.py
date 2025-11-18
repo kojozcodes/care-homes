@@ -1176,6 +1176,19 @@ if not st.session_state.logged_in:
 # -------------------------
 # Streamlit UI - Main
 # -------------------------
+
+# Important Notice Alert
+st.warning("""
+### ⚠️ Important Notice
+**Fiverr Account Suspension:** My Fiverr account has been permanently suspended due to a "suspicious clone account" issue. 
+This is beyond my control, but I remain committed to supporting you.
+
+**For continued support and updates, please contact me directly at:**  
+📧 **hamza.ahmed.ws@gmail.com**
+
+Thank you for your understanding and patience.
+""")
+
 st.title("🏡 Care Home Monthly Activities – Editable Preview & A3 PDF")
 
 col1, col2 = st.columns(2)
