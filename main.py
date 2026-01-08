@@ -118,12 +118,48 @@ def save_uploaded_csv(uploaded_file, csv_type, year, month):
     filepath = os.path.join(UPLOADS_DIR, filename)
     
     try:
-        # Read the uploaded file and save it
+        # Read the uploaded file
+        uploaded_file.seek(0)  # Reset file pointer to beginning
         df = pd.read_csv(uploaded_file)
+        
+        # Validate the CSV has data
+        if df.empty:
+            st.error(f"❌ {csv_type.title()} CSV is empty. Please add data rows to your file.")
+            return None
+        
+        # Check for required columns based on type
+        if csv_type == "rota":
+            required_cols = ["date", "staff"]
+            missing_cols = [col for col in required_cols if col not in df.columns]
+            if missing_cols:
+                st.error(f"❌ Staff Rota CSV is missing required columns: {', '.join(missing_cols)}")
+                st.info(f"📋 Your columns are: {', '.join(df.columns.tolist())}")
+                st.info(f"📋 Required columns are: {', '.join(required_cols)}")
+                return None
+                
+        elif csv_type == "activities":
+            required_cols = ["name"]
+            missing_cols = [col for col in required_cols if col not in df.columns]
+            if missing_cols:
+                st.error(f"❌ Activities CSV is missing required column: {', '.join(missing_cols)}")
+                st.info(f"📋 Your columns are: {', '.join(df.columns.tolist())}")
+                st.info(f"📋 At minimum, you need a 'name' column")
+                return None
+        
+        # Save the file
         df.to_csv(filepath, index=False)
         return filepath
+        
+    except pd.errors.EmptyDataError:
+        st.error(f"❌ {csv_type.title()} CSV file is completely empty.")
+        st.info("💡 Make sure your CSV has:\n- Column headers in the first row\n- At least one data row below the headers")
+        return None
+    except UnicodeDecodeError:
+        st.error(f"❌ {csv_type.title()} CSV has encoding issues. Save it as UTF-8 format.")
+        return None
     except Exception as e:
-        st.error(f"Error saving {csv_type} CSV: {e}")
+        st.error(f"❌ Error reading {csv_type.title()} CSV: {str(e)}")
+        st.info("💡 Common issues:\n- File is not actually a CSV\n- File has special characters\n- File is corrupted")
         return None
 
 
@@ -1407,14 +1443,23 @@ with col_rota:
     
     if saved_rota is None or st.session_state.get("upload_new_rota", False):
         uploaded_rota = st.file_uploader("📂 Upload Staff Rota CSV", type=["csv"], key="rota_upload")
-        if uploaded_rota:
-            rota_df = parse_csv(uploaded_rota)
-            if rota_df is not None:
-                # Save the uploaded CSV
-                save_uploaded_csv(uploaded_rota, "rota", year, month)
-                st.session_state["upload_new_rota"] = False
-                st.success("Rota CSV saved!")
-                st.rerun()
+        if uploaded_rota is not None:
+            # Check if this file was already processed
+            file_hash = hashlib.md5(uploaded_rota.getvalue()).hexdigest()
+            if st.session_state.get("last_rota_hash") != file_hash:
+                rota_df = parse_csv(uploaded_rota)
+                if rota_df is not None and not rota_df.empty:
+                    # Save the uploaded CSV
+                    uploaded_rota.seek(0)  # Reset file pointer
+                    saved_path = save_uploaded_csv(uploaded_rota, "rota", year, month)
+                    if saved_path:
+                        st.session_state["upload_new_rota"] = False
+                        st.session_state["last_rota_hash"] = file_hash
+                        st.rerun()
+                else:
+                    rota_df = None
+            else:
+                rota_df = saved_rota if saved_rota is not None else None
         else:
             rota_df = None
     else:
@@ -1430,14 +1475,23 @@ with col_activities:
     
     if saved_activities is None or st.session_state.get("upload_new_activities", False):
         uploaded_activities = st.file_uploader("📂 Upload Activities CSV", type=["csv"], key="activities_upload")
-        if uploaded_activities:
-            activities_df = parse_csv(uploaded_activities)
-            if activities_df is not None:
-                # Save the uploaded CSV
-                save_uploaded_csv(uploaded_activities, "activities", year, month)
-                st.session_state["upload_new_activities"] = False
-                st.success("Activities CSV saved!")
-                st.rerun()
+        if uploaded_activities is not None:
+            # Check if this file was already processed
+            file_hash = hashlib.md5(uploaded_activities.getvalue()).hexdigest()
+            if st.session_state.get("last_activities_hash") != file_hash:
+                activities_df = parse_csv(uploaded_activities)
+                if activities_df is not None and not activities_df.empty:
+                    # Save the uploaded CSV
+                    uploaded_activities.seek(0)  # Reset file pointer
+                    saved_path = save_uploaded_csv(uploaded_activities, "activities", year, month)
+                    if saved_path:
+                        st.session_state["upload_new_activities"] = False
+                        st.session_state["last_activities_hash"] = file_hash
+                        st.rerun()
+                else:
+                    activities_df = None
+            else:
+                activities_df = saved_activities if saved_activities is not None else None
         else:
             activities_df = None
     else:
